@@ -2,6 +2,18 @@ import json
 import yaml
 import requests
 from pathlib import Path
+from datetime import datetime, date
+
+def convert_datetime_objects(obj):
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    elif isinstance(obj, dict):
+        return {key: convert_datetime_objects(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_datetime_objects(item) for item in obj]
+    elif isinstance(obj, tuple):
+        return tuple(convert_datetime_objects(item) for item in obj)
+    return obj
 
 def load_spec(path_or_url: str) -> dict:
     if path_or_url.startswith("http://") or path_or_url.startswith("https://"):
@@ -17,6 +29,9 @@ def load_spec(path_or_url: str) -> dict:
 
 def _parse_spec(text: str) -> dict:
     try:
-        return json.loads(text)
+        spec = json.loads(text)
     except json.JSONDecodeError:
-        return yaml.safe_load(text)
+        spec = yaml.safe_load(text)
+
+    # Convert any datetime objects to ISO strings
+    return convert_datetime_objects(spec)

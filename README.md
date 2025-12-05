@@ -2,6 +2,8 @@
 
  Convert OpenAPI 3.1.x specifications to 3.0.x — with logic preservation, support for `nullable`, `const`, advanced schema handling, and conditionals via `oneOf`.
 
+This repo contains an additional bugfix for handling datetimes
+
 ##  Features
 
 The `openapi-downgrade` tool provides a robust solution for converting OpenAPI 3.1.x specifications to 3.0.x, ensuring maximum compatibility while preserving the original API's logic and intent. Key features include:
@@ -91,7 +93,7 @@ pip install openapi-downgrade
 Or, for development, you can clone the repository and install it in editable mode:
 
 ```bash
-git clone https://github.com/RajeshRoy4426/openapi_downgrade_3_0.git
+git clone https://github.com/danielstuckert/openapi_downgrade_3_0.git
 cd openapi_downgrade_3_0
 pip install -e .
 ```
