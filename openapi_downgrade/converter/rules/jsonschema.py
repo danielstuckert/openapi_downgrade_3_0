@@ -7,7 +7,13 @@ def downgrade_json_schema(schema: dict, warnings: "WarningCollector") -> dict:
     # Keywords that are not supported in OpenAPI 3.0 and are not handled by other rules.
     # "if", "then", "else" are handled by conditionals_to_oneof.py
     # "const" is handled by const_to_enum.py
-    unsupported = ["not", "dependentSchemas", "unevaluatedProperties"]
+    unsupported = ["not",
+                   "dependentSchemas",
+                   "unevaluatedProperties",
+                   "$schema",      # Add: JSON Schema dialect identifier
+                   "$id",          # Add: JSON Schema ID
+                   "$defs"         # Add: JSON Schema 2020-12 definitions
+                   ]
     
     if isinstance(schema, dict):
         for u in unsupported:
